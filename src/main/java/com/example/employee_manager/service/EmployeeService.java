@@ -18,6 +18,13 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+    public List<Employee> searchEmployees(String keyword) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            return employeeRepository.findByFullNameContainingIgnoreCase(keyword.trim());
+        }
+        return employeeRepository.findAll();
+    }
+
     public void saveEmployee(Employee employee) {
         employeeRepository.save(employee);
     }

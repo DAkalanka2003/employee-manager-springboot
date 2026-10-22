@@ -19,12 +19,13 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    // 1. Read: Display the employee list and the registration form
+    // 1. Read: Display employee list (with optional keyword search) and registration form
     @GetMapping
-    public String viewHomePage(Model model) {
-        List<Employee> list = employeeService.getAllEmployees();
+    public String viewHomePage(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+        List<Employee> list = employeeService.searchEmployees(keyword);
         model.addAttribute("listEmployees", list);
         model.addAttribute("employeeCount", list.size());
+        model.addAttribute("keyword", keyword);
         if (!model.containsAttribute("employee")) {
             model.addAttribute("employee", new Employee());
         }
